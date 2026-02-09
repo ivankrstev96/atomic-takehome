@@ -1,0 +1,25 @@
+plugins {
+    id "com.github.node-gradle.node" version "7.1.0"
+    id "base"
+}
+
+node {
+    download = true
+    version = "22.12.0"
+}
+
+tasks.register('npmBuild', NpmTask) {
+    args = ['run', 'build']
+    dependsOn npmInstall
+}
+
+tasks.register('cleanFrontend', Delete) {
+    delete 'dist', 'node_modules'
+}
+
+tasks.named("clean") {
+    dependsOn("cleanFrontend")
+}
+tasks.named("build") {
+    dependsOn("npmBuild")
+}

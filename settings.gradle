@@ -1,0 +1,3 @@
+rootProject.name = 'atomic-take-home'
+include 'backend'
+include 'frontend'
