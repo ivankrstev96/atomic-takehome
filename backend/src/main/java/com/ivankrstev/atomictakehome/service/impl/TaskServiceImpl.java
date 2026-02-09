@@ -88,7 +88,7 @@ public class TaskServiceImpl implements TaskService {
 
     private Task setTimestamps(Task task) {
         LocalDateTime now = LocalDateTime.now();
-        if (task.getCreatedAt() != null) {
+        if (task.getCreatedAt() == null) {
             task.setCreatedAt(now);
         }
         task.setUpdatedAt(now);
