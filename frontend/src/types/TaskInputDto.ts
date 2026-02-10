@@ -1,6 +1,6 @@
 export type TaskInputDto = {
   title: string;
   description?: string;
-  isCompleted: boolean;
+  isCompleted?: boolean;
   dueDate?: string;
 }

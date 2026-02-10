@@ -23,6 +23,9 @@ export function ErrorComponent(props: Props) {
         if (error.errors.length === 0) {
           return "Validation error!"
         }
+        if (error.errors.length === 1) {
+          return `${error.errors[0].field}: ${error.errors[0].message}`
+        }
         return <ul>
           {error.errors.map(validationError => {
             return <li key={validationError.field}>{`${validationError.field}: ${validationError.message}`}</li>
