@@ -1,12 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-
-// core styles are required for all packages
-import '@mantine/core/styles.css';
 import {MantineProvider} from "@mantine/core";
 import {createRouter, RouterProvider} from "@tanstack/react-router";
 import {routeTree} from "./routeTree.gen.ts";
+
+
+// core styles are required for all packages
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 
 // Create a new router instance
 const router = createRouter({

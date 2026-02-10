@@ -17,4 +17,5 @@ public interface TaskService {
 
     void delete(Long taskId);
 
+    TaskOutputDto toggleCompleted(Long taskId);
 }

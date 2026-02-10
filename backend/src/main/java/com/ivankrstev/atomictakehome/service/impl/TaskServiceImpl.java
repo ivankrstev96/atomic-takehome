@@ -64,6 +64,7 @@ public class TaskServiceImpl implements TaskService {
                         task.getIsCompleted() :
                         taskInputDto.getIsCompleted()
         );
+        task.setDueDate(taskInputDto.getDueDate());
         task = this.taskRepository.save(task);
         return taskMapper.toOutputDto(task);
     }
@@ -72,6 +73,16 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Long taskId) {
         getOrThrowException(taskId);
         this.taskRepository.deleteById(taskId);
+    }
+
+    @Override
+    public TaskOutputDto toggleCompleted(Long taskId) {
+        Task task = this.setTimestamps(
+                this.getOrThrowException(taskId)
+        );
+        task.setIsCompleted(!task.getIsCompleted());
+        task = this.taskRepository.save(task);
+        return taskMapper.toOutputDto(task);
     }
 
     private Task getOrThrowException(Long taskId) {

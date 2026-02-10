@@ -39,7 +39,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskOutputDto> insert(
+    public ResponseEntity<TaskOutputDto> update(
             @PathVariable Long id,
             @RequestBody @Valid TaskInputDto taskInputDto
     ) {
@@ -51,6 +51,12 @@ public class TaskController {
     public ResponseEntity<String> delete(@PathVariable Long id) {
         this.taskService.delete(id);
         return ResponseEntity.ok("Task deleted successfully");
+    }
+
+    @PostMapping("/{id}/toggle")
+    public ResponseEntity<TaskOutputDto> toggleCompleted(@PathVariable Long id) {
+        TaskOutputDto taskOutputDto = this.taskService.toggleCompleted(id);
+        return ResponseEntity.ok(taskOutputDto);
     }
 
 }

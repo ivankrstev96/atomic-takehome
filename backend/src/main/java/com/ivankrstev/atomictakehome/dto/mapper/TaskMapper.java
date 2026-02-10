@@ -14,6 +14,7 @@ public class TaskMapper {
                 .title(inputDto.getTitle())
                 .description(inputDto.getDescription())
                 .isCompleted(isCompleted)
+                .dueDate(inputDto.getDueDate())
                 .build();
     }
 
@@ -23,6 +24,7 @@ public class TaskMapper {
                 .title(task.getTitle())
                 .description(task.getDescription())
                 .isCompleted(task.getIsCompleted())
+                .dueDate(task.getDueDate())
                 .build();
     }
 }

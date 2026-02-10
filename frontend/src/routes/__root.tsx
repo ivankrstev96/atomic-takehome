@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Outlet, createRootRoute} from '@tanstack/react-router'
-import {AppShell} from "@mantine/core";
+import {AppShell, Container} from "@mantine/core";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -13,7 +13,9 @@ function RootComponent() {
         padding="md"
       >
         <AppShell.Main>
-          <Outlet/>
+          <Container size="lg">
+            <Outlet/>
+          </Container>
         </AppShell.Main>
       </AppShell>
     </React.Fragment>
