@@ -1,4 +1,4 @@
-import {TaskTable} from "../components/TasksTable.tsx";
+import {TasksTable} from "../components/TasksTable.tsx";
 import {Button, Card, Group, LoadingOverlay} from "@mantine/core";
 import {useEffect, useState} from "react";
 import {deleteTask, getTasks, toggleTaskCompleted} from "../services/task-services.ts";
@@ -69,7 +69,7 @@ export function Tasks() {
     <Card withBorder>
       <ErrorComponent error={error} clearError={() => setError(undefined)} />
       <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
-      <TaskTable
+      <TasksTable
         tasks={tasks}
         onOpen={(task) => router.navigate({to: `/tasks/$taskId`, params: {taskId: task.id.toString()}})}
         onToggleCompleted={(task) => handleToggle(task.id)}

@@ -135,8 +135,6 @@ class TaskServiceImplTest {
         ));
     }
 
-
-
     @Test
     void delete_whenIdExists_shouldCallDelete() {
         // Given
@@ -161,5 +159,35 @@ class TaskServiceImplTest {
         
         verify(taskRepository, times(1)).findById(1L);
         verify(taskRepository, never()).deleteById(any());
+    }
+
+    @Test
+    void toggleCompleted_shouldToggleCompleted() {
+        // Given
+        Boolean originalCompleted = task.getIsCompleted();
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
+        when(taskRepository.save(any(Task.class))).thenReturn(task);
+
+        // When
+        taskService.toggleCompleted(1L);
+
+        // Then
+        verify(taskRepository, times(1)).findById(1L);
+        verify(taskRepository, times(1)).save(argThat(updatedTask ->
+                !updatedTask.getIsCompleted().equals(originalCompleted)
+        ));
+    }
+
+    @Test
+    void toggleCompleted_whenIdDoesNotExist_shouldThrowException() {
+        // Given
+        when(taskRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // When/Then
+        assertThatThrownBy(() -> taskService.toggleCompleted(1L))
+                .isInstanceOf(ResponseStatusException.class);
+
+        verify(taskRepository, times(1)).findById(1L);
+        verify(taskRepository, never()).save(any());
     }
 }

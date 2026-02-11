@@ -10,7 +10,7 @@ interface TaskTableProps {
   onDelete: (task: TaskOutputDto) => void;
 }
 
-export function TaskTable({tasks, onOpen, onToggleCompleted, onDelete}: TaskTableProps) {
+export function TasksTable({tasks, onOpen, onToggleCompleted, onDelete}: TaskTableProps) {
   return (
     <Table highlightOnHover>
       <TableThead>

@@ -5,13 +5,13 @@ import com.ivankrstev.atomictakehome.dto.TaskOutputDto;
 import com.ivankrstev.atomictakehome.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/tasks")
 public class TaskController {
@@ -50,7 +50,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         this.taskService.delete(id);
-        return ResponseEntity.ok("Task deleted successfully");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/{id}/toggle")

@@ -44,7 +44,7 @@ export function Task(props: Props) {
     }
 
     void fetchTask();
-  }, []);
+  }, [taskId]);
 
   const handleSubmit = async (taskInput: TaskInputDto) => {
     setSubmitting(true);
@@ -53,7 +53,7 @@ export function Task(props: Props) {
     if (addNewMode) {
       response = await createTask(taskInput);
     } else {
-      response = await updateTask(taskId!!, taskInput);
+      response = await updateTask(taskId!, taskInput);
     }
 
     if (response.success) {

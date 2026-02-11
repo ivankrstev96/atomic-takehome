@@ -37,7 +37,7 @@ export const axiosApiWrapper = async <T>(
 };
 
 const axiosToApiError = (axiosError: AxiosError<BackendErrorResponse>): ApiResponseError => {
-  switch (axiosError.status) {
+  switch (axiosError.response?.status) {
     case 400:
       const validationErrors = axiosError.response?.data?.errors;
       return {
@@ -54,7 +54,7 @@ const axiosToApiError = (axiosError: AxiosError<BackendErrorResponse>): ApiRespo
         message: axiosError.message || "Not found!",
         error: {
           kind: "NOT_FOUND",
-          message: axiosError.response?.data?.message || "Something found!",
+          message: axiosError.response?.data?.message || "Not found!",
         }
       };
     case 500:

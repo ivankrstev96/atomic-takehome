@@ -21,34 +21,32 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
-    private final TaskMapper taskMapper;
 
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper) {
+    public TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.taskMapper = taskMapper;
     }
 
 
     @Override
     public List<TaskOutputDto> findAll() {
         List<Task> tasks = this.taskRepository.findAll();
-        return tasks.stream().map(taskMapper::toOutputDto).toList();
+        return tasks.stream().map(TaskMapper::toOutputDto).toList();
     }
 
     @Override
     public TaskOutputDto find(Long taskId) {
         Task task = this.getOrThrowException(taskId);
-        return taskMapper.toOutputDto(task);
+        return TaskMapper.toOutputDto(task);
     }
 
     @Override
     @Transactional
     public TaskOutputDto insert(TaskInputDto taskInputDto) {
         Task task = this.setTimestamps(
-                taskMapper.fromInputDto(taskInputDto)
+                TaskMapper.fromInputDto(taskInputDto)
         );
         task = this.taskRepository.save(task);
-        return taskMapper.toOutputDto(task);
+        return TaskMapper.toOutputDto(task);
     }
 
     @Override
@@ -66,7 +64,7 @@ public class TaskServiceImpl implements TaskService {
         );
         task.setDueDate(taskInputDto.getDueDate());
         task = this.taskRepository.save(task);
-        return taskMapper.toOutputDto(task);
+        return TaskMapper.toOutputDto(task);
     }
 
     @Override
@@ -76,20 +74,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public TaskOutputDto toggleCompleted(Long taskId) {
         Task task = this.setTimestamps(
                 this.getOrThrowException(taskId)
         );
         task.setIsCompleted(!task.getIsCompleted());
         task = this.taskRepository.save(task);
-        return taskMapper.toOutputDto(task);
+        return TaskMapper.toOutputDto(task);
     }
 
     private Task getOrThrowException(Long taskId) {
         return this.taskRepository
                 .findById(taskId)
                 .orElseThrow(() -> {
-                    log.error("Task not found with id: {}", taskId);
+                    log.debug("Task not found with id: {}", taskId);
                     return new ResponseStatusException(
                             HttpStatus.NOT_FOUND,
                             "Task not found with id: " + taskId
